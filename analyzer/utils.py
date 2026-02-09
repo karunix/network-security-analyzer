@@ -13,3 +13,22 @@ def exit_code_from_findings(findings):
         return 1
 
     return 0
+import json
+from analyzer.models import Severity
+
+
+def findings_to_json(findings):
+    return json.dumps(
+        {
+            "findings": [
+                {
+                    "scope": f.scope,
+                    "observation": f.observation,
+                    "severity": f.severity.value,
+                    "explanation": f.explanation,
+                    "recommendation": f.recommendation,
+                }
+                for f in findings
+            ]
+        }
+    )
